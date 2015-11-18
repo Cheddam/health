@@ -1,0 +1,17 @@
+#content {
+	max-width: 600px;
+	margin: 20px auto 0;
+}
+
+.brand {
+	font-weight: bold;
+}
+
+.main-action {
+	color: #008cba;
+}
+
+.main-action.active, .full-form {
+	background: #008cba;
+	color: #fff;
+}

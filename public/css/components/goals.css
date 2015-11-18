@@ -1,0 +1,17 @@
+.goal {
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid rgb(230, 230, 230);	
+}
+	.goal-points {
+		width: 30px;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 15px;
+		background: pink;
+		margin: 0 10px;
+		padding: 5px;
+	}
+		.goal-completed .goal-points {
+			background: green;
+		}
