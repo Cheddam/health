@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Entry;
+
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +25,10 @@ class Goal extends Model
      */
     public function getCompletedAttribute()
     {
+        if (\Auth::guest()) {
+            return false;
+        }
+
     	$entry = Entry::where('goal_id', $this->id)
     					->where('user_id', \Auth::user()->id)
     					->where('completed_on', Carbon::today())

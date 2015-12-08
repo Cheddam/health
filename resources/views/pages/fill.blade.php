@@ -9,7 +9,3 @@
 @section('css')
 	<link rel="stylesheet" href="/css/components/goals.css">
 @endsection
-
-@section('js')
-	<script type="text/babel" src="/js/components/fill.js"></script>
-@endsection
