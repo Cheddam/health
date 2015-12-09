@@ -16,6 +16,7 @@
 
 	@yield('content')
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.0.4/redux.js"></script>
 	<script src="https://fb.me/react-0.14.2.js"></script>
 	<script src="https://fb.me/react-dom-0.14.2.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
