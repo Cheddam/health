@@ -19,13 +19,27 @@ Route::get('/', function () {
 });
 
 // Views
-Route::get('fill', function() { return view('pages.fill'); });
+Route::get('fill', function() { return view('front.pages.fill'); })->middleware('auth');
 
 // Endpoints
 Route::group(['prefix' => 'goals'], function() {
-	Route::get('list', 'GoalController@getGoalsByCategory');
-	Route::get('completed', 'GoalController@getCompletedGoals');
-	Route::post('complete/{id}', 'GoalController@completeGoal');
+	Route::get('list', 'GoalController@getGoals');
+	Route::get('toggle/{id}', 'GoalController@toggleGoal')->middleware('auth');
+});
+
+Route::get('/categories/list', function() {
+	return Category::all();
+});
+
+// Backend
+Route::group(['prefix' => 'back', 'middleware' => ['auth']], function() {
+	// Views
+	Route::get('/', function() { return view('back.pages.root'); });
+	Route::get('goals', function() { return view('back.pages.goals'); });
+
+	// Endpoints
+	Route::resource('goal', 'Back\GoalController');
+	Route::resource('category', 'Back\CategoryController');
 });
 
 

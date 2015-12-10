@@ -19,9 +19,9 @@ class GoalController extends Controller
 		// $this->middleware('auth');
 	}
 
-    public function getGoalsByCategory(Request $request)
+    public function getGoals(Request $request)
     {
-    	return Category::all();
+    	return Goal::all();
     }
 
     /**
@@ -32,8 +32,23 @@ class GoalController extends Controller
     	return Entry::where('user_id', \Auth::user()->id)->where('completed_on', Carbon::today());
     }
 
-    public function completeGoal($id, Request $request)
+    /**
+     * Toggles a goal between completed and not (by adding or deleting a record)
+     * @param  integer  $id      The ID of the goal to toggle.
+     * @param  Request $request The request.
+     * @return mixed           Either the newly created completion, or true (?)
+     * @todo Make this code more concise.
+     */
+    public function toggleGoal($id, Request $request)
     {
+        if ($entry = Entry::where('goal_id', $id)
+                ->where('user_id', \Auth::user()->id)
+                ->where('completed_on', Carbon::today())->first()) {
+            $entry->delete();
+
+            return json_encode('true');
+        }
+
     	$entry = new Entry();
 
     	$entry->goal_id = $id; # TODO maybe use Laravel's relationships more here

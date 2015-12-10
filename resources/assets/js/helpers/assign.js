@@ -1,12 +1,10 @@
 // Object.assign Polyfill
-'use strict';
-
 if (!Object.assign) {
   Object.defineProperty(Object, 'assign', {
     enumerable: false,
     configurable: true,
     writable: true,
-    value: function value(target) {
+    value: function(target) {
       'use strict';
       if (target === undefined || target === null) {
         throw new TypeError('Cannot convert first argument to object');
@@ -33,4 +31,3 @@ if (!Object.assign) {
     }
   });
 }
-//# sourceMappingURL=all.js.map

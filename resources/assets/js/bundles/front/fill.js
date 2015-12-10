@@ -1,0 +1,1 @@
+var goalApp = require('../../components/fill-goals');

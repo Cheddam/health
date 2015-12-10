@@ -1,4 +1,4 @@
-@extends('base')
+@extends('front.base')
 
 @section('content')
 	
@@ -8,4 +8,8 @@
 
 @section('css')
 	<link rel="stylesheet" href="/css/components/goals.css">
+@endsection
+
+@section('js')
+    <script src="/js/front/fill.js"></script>
 @endsection
