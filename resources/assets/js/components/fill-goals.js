@@ -60,6 +60,8 @@ var GoalInterface = React.createClass({
 	}
 });
 
+// Model
+
 var goal = function(state, action) {
 
 	switch (action.type) {

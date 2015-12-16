@@ -20,11 +20,16 @@ Route::get('/', function () {
 
 // Views
 Route::get('fill', function() { return view('front.pages.fill'); })->middleware('auth');
+Route::get('leaderboards', function() { return view('front.pages.leaderboards'); });
 
 // Endpoints
 Route::group(['prefix' => 'goals'], function() {
 	Route::get('list', 'GoalController@getGoals');
 	Route::get('toggle/{id}', 'GoalController@toggleGoal')->middleware('auth');
+});
+
+Route::group(['prefix' => 'stats'], function() {
+	Route::get('leaderboards/all', 'StatsController@getAllLeaderboards');
 });
 
 Route::get('/categories/list', function() {

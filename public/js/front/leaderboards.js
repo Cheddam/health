@@ -28780,9 +28780,9 @@ module.exports = exports["default"];
 },{}],169:[function(require,module,exports){
 'use strict';
 
-var goalApp = require('../../components/fill-goals');
+var goalApp = require('../../components/leaderboards');
 
-},{"../../components/fill-goals":170}],170:[function(require,module,exports){
+},{"../../components/leaderboards":170}],170:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -28791,234 +28791,142 @@ var ReactDOM = require('react-dom');
 var Redux = require('redux');
 require('../helpers/assign');
 
-var Goal = React.createClass({
-	displayName: 'Goal',
+// Components
 
-	handleClick: function handleClick() {
-		store.dispatch({
-			type: 'TOGGLE_GOAL_COMPLETED',
-			id: this.props.id
-		});
+var LeaderboardEntry = React.createClass({
+	displayName: 'LeaderboardEntry',
+
+	render: function render() {
+		return React.createElement(
+			'div',
+			{ className: 'leaderboard-entry' },
+			React.createElement(
+				'span',
+				null,
+				this.props.name
+			),
+			React.createElement(
+				'span',
+				{ className: 'pull-right' },
+				this.props.points
+			)
+		);
+	}
+});
+
+var LeaderboardEntryList = React.createClass({
+	displayName: 'LeaderboardEntryList',
+
+	entryList: function entryList(entry) {
+		return React.createElement(LeaderboardEntry, { name: entry.name, points: entry.points });
 	},
 	render: function render() {
 		return React.createElement(
 			'div',
-			{ className: this.props.completed ? 'goal goal-completed' : 'goal', onClick: this.handleClick },
-			React.createElement(
-				'span',
-				{ className: 'goal-points' },
-				this.props.points
-			),
-			this.props.name
+			{ className: 'leaderboard-entry-list' },
+			this.props.list.map(this.entryList)
 		);
 	}
 });
 
-var Category = React.createClass({
-	displayName: 'Category',
+var Leaderboard = React.createClass({
+	displayName: 'Leaderboard',
 
 	render: function render() {
 		return React.createElement(
 			'div',
-			{ className: 'category' },
+			{ className: 'leaderboard' },
 			React.createElement(
-				'h4',
+				'h3',
 				null,
 				this.props.name
 			),
-			this.props.goals.map(function (goal) {
-				return React.createElement(Goal, { key: goal.id, id: goal.id, name: goal.name, points: goal.points, completed: goal.completed });
-			}, this)
+			React.createElement(LeaderboardEntryList, { list: this.props.list })
 		);
 	}
 });
 
-var CategoryList = React.createClass({
-	displayName: 'CategoryList',
+var LeaderboardList = React.createClass({
+	displayName: 'LeaderboardList',
 
+	leaderboardList: function leaderboardList(leaderboard) {
+		return React.createElement(Leaderboard, { name: leaderboard.name, list: leaderboard.list });
+	},
 	render: function render() {
 		return React.createElement(
 			'div',
-			{ className: 'category-list' },
-			this.props.categories.map(function (category) {
-				return React.createElement(Category, { key: category.name, name: category.name, goals: getGoalsForCategory(this.props.goals, category.id) });
-			}, this)
+			{ className: 'leaderboard-list' },
+			this.props.leaderboards.map(this.leaderboardList)
 		);
 	}
 });
 
-var GoalInterface = React.createClass({
-	displayName: 'GoalInterface',
+var LeaderboardInterface = React.createClass({
+	displayName: 'LeaderboardInterface',
 
 	render: function render() {
 		return React.createElement(
 			'div',
-			{ className: 'pure-u-1 goal-interface' },
-			React.createElement(CategoryList, { categories: this.props.categories, goals: this.props.goals })
+			{ className: 'pure-u-1 leaderboard-interface' },
+			React.createElement(LeaderboardList, { leaderboards: this.props.leaderboards })
 		);
 	}
 });
 
 // Model
 
-var goal = function goal(state, action) {
-
-	switch (action.type) {
-		case 'TOGGLE_GOAL_COMPLETED':
-			if (state.id !== action.id) {
-				return state;
-			}
-
-			if (!action.local) {
-				$.ajax({
-					url: '/goals/toggle/' + state.id,
-					dataType: 'json',
-					cache: false,
-					error: function error(xhr, status, err) {
-						store.dispatch({
-							type: 'TOGGLE_GOAL_COMPLETED',
-							id: state.id,
-							local: true
-						});
-						console.error('goal retrieval: ', status, err.toString());
-					}
-				});
-			}
-
-			return Object.assign({}, state, { completed: !state.completed });
-		default:
-			return state;
-	}
-};
-
-var goals = function goals(state, action) {
-
+var leaderboards = function leaderboards(state, action) {
 	if (typeof state === 'undefined') {
 		return [];
 	}
 
 	switch (action.type) {
-		case 'TOGGLE_GOAL_COMPLETED':
-			return state.map(function (g) {
-				return goal(g, action);
-			});
-		case 'ADD_GOALS':
-			return state.concat(action.goals);
+		case 'ADD_LEADERBOARDS':
+			return state.concat(action.leaderboards);
 		default:
 			return state;
 	}
 };
 
-var categories = function categories(state, action) {
+var leaderboardApp = function leaderboardApp(state, action) {
 
 	if (typeof state === 'undefined') {
-		return [];
-	}
-
-	switch (action.type) {
-		case 'ADD_CATEGORIES':
-			return state.concat(action.categories);
-		default:
-			return state;
-	}
-};
-
-var goalApp = function goalApp(state, action) {
-
-	if (typeof state === 'undefined') {
-		return { categories: [], goals: [] };
+		return { leaderboards: [] };
 	}
 
 	return {
-		goals: goals(state.goals, action),
-		categories: categories(state.categories, action)
+		leaderboards: leaderboards(state.leaderboards, action)
 	};
-};
-
-var getGoalsForCategory = function getGoalsForCategory(goals, category) {
-	return goals.filter(function (goal, i, goals) {
-		if (goal.category_id == this) {
-			return goal;
-		}
-	}, category);
 };
 
 // Initialization
 
-var app = Redux.combineReducers({ goalApp: goalApp });
+var app = Redux.combineReducers({ leaderboardApp: leaderboardApp });
 
 var store = Redux.createStore(app);
 
 $.ajax({
-	url: '/goals/list',
+	url: '/stats/leaderboards/all',
 	dataType: 'json',
 	cache: false,
-	success: (function (data) {
+	success: function success(data) {
 		store.dispatch({
-			type: 'ADD_GOALS',
-			goals: data
+			type: 'ADD_LEADERBOARDS',
+			leaderboards: data
 		});
-	}).bind(undefined),
-	error: (function (xhr, status, err) {
-		console.error('goal retrieval: ', status, err.toString());
-	}).bind(undefined)
-});
-
-$.ajax({
-	url: '/categories/list',
-	dataType: 'json',
-	cache: false,
-	success: (function (data) {
-		store.dispatch({
-			type: 'ADD_CATEGORIES',
-			categories: data
-		});
-	}).bind(undefined),
-	error: (function (xhr, status, err) {
-		console.error('goal retrieval: ', status, err.toString());
-	}).bind(undefined)
+	},
+	error: function error(xhr, status, err) {
+		console.error('leaderboard retrieval: ', status, err.toString());
+	}
 });
 
 var render = function render() {
 
-	ReactDOM.render(React.createElement(GoalInterface, { categories: store.getState().goalApp.categories, goals: store.getState().goalApp.goals }), document.getElementById('goals'));
+	ReactDOM.render(React.createElement(LeaderboardInterface, { leaderboards: store.getState().leaderboardApp.leaderboards }), document.getElementById('leaderboards'));
 };
 
 store.subscribe(render);
 render();
-
-// $.ajax({
-// 	url: '/goals/complete/' + id,
-// 	dataType: 'json',
-// 	type: 'POST',
-// 	data: {
-// 		'_token': $('meta[name=csrf-token]').attr('content')
-// 	},
-// 	success: function(data) {
-// 		var localCats = this.state.data;
-
-// 		for (var c = 0; c < localCats.count; c++) {
-// 			for (var g = 0; g < localCats[c].goals.count; g++) {
-// 				if (localCats[c].goals[g].id === data.goal_id) {
-// 					localCats[c].goals[g].completed = true;
-// 				}
-// 			}
-// 		}
-
-// 		this.setState({data: localCats});
-// 	}.bind(this),
-// 	error: function(xhr, status, err) {
-// 		console.error(this.props.url, status, err.toString());
-// 	}.bind(this)
-// });
-
-// loadGoalsFromServer: function() {
-
-// },
-// componentDidMount: function() {
-// 	this.loadGoalsFromServer();
-// 	setInterval(this.loadGoalsFromServer, this.props.pollInterval);
-// },
 
 },{"../helpers/assign":171,"jquery":1,"react":159,"react-dom":3,"redux":161}],171:[function(require,module,exports){
 // Object.assign Polyfill
@@ -29059,4 +28967,4 @@ if (!Object.assign) {
 
 },{}]},{},[169]);
 
-//# sourceMappingURL=fill.js.map
+//# sourceMappingURL=leaderboards.js.map

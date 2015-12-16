@@ -13,5 +13,6 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.browserify('bundles/front/fill.js', './public/js/front/fill.js')
+       .browserify('bundles/front/leaderboards.js', './public/js/front/leaderboards.js')
        .browserify('bundles/back/goals.js', './public/js/back/goals.js');
 });

@@ -30,7 +30,7 @@
 					</div>
 
 					<div class="pure-controls">
-						<button class="pure-button pure-button-primary" type="submit">Commit</button>
+						<button class="pure-button pure-button-primary" type="submit">Register</button>
 					</div>
 				</fieldset>
 			</form>
