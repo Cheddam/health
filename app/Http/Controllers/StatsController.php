@@ -33,8 +33,8 @@ class StatsController extends Controller
 
     private function getCurrentWeekLeaderboard()
     {
-        if (Carbon::now()->dayOfWeek === Carbon::MONDAY) {
-            $cutoffDate = Carbon::today();
+        if (Carbon::now()->dayOfWeek === Carbon::SUNDAY) {
+            $cutoffDate = Carbon::parse('monday last week');
         } else {
             $cutoffDate = Carbon::parse('monday this week');
         }
