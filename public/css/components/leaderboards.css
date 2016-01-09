@@ -1,0 +1,38 @@
+.leaderboard-list {
+    /**/
+}
+
+.leaderboard {
+    margin-bottom: 2.5em;
+}
+
+.leaderboard-entry-list {
+    position: relative;
+}
+
+.leaderboard-entry {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(230, 230, 230);    
+    clear: both;
+    line-height: 1.75em;
+    padding-left: 1.75em;
+}
+
+.leaderboard-entry:first-child {
+    font-weight: bold;
+}
+
+.leaderboard-entry:first-child .leaderboard-entry-points {
+    color: green;
+}
+
+.leaderboard-entry:first-child:before {
+    content: ' ';
+    background: url('/img/crown.svg');
+    background-position: center;
+    width: 1.5em;
+    height: 1.5em;
+    position: absolute;
+    left: 0;
+}

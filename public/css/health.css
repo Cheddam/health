@@ -1,17 +1,95 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Menlo', 'Lucida Console', system;
+    font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Menlo', 'Lucida Console', system;
+    text-transform: lowercase;
+}
+
+.nav-wrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.front-nav-wrapper {
+    background: green;
+    color: white;
+    text-transform: lowercase;
+}
+
+.back-nav-wrapper {
+    background: orange;
+    color: white;
+    text-transform: lowercase;
+}
+
+.nav {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.nav-brand {
+    font-weight: bold;
+    text-transform: lowercase;
+}
+
+.nav-link,
+.nav-item,
+.nav-brand {
+    color: white;
+}
+
+.nav-link {
+    padding: .75em .5em;
+    background: none;
+}
+
+.nav-link:hover:not(.nav-link-disabled):not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link-disabled:hover {
+    background: none;
+}
+
+.nav-link-disabled {
+    color: rgba(255, 255, 255, 0.3);
+    cursor: default;
+}
+
+.nav-link.active {
+    background: white;
+    color: black;
+}
+
+/* Content */
+
 #content {
-	max-width: 600px;
-	margin: 20px auto 0;
+    max-width: 800px;
+    margin: 3em auto 0;
+    padding: 0 .5em;
 }
 
-.brand {
-	font-weight: bold;
+/* Helpers */
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
 }
 
-.main-action {
-	color: #008cba;
+.pull-right {
+    float: right;
 }
 
-.main-action.active, .full-form {
-	background: #008cba;
-	color: #fff;
+.hide {
+    display: none;
 }
