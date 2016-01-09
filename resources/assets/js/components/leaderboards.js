@@ -11,7 +11,7 @@ var LeaderboardEntry = React.createClass({
 		return (
 			<div className="leaderboard-entry">
 				<span>{this.props.name}</span>
-				<span className="pull-right">{this.props.points}</span>
+				<span className="leaderboard-entry-points pull-right">{this.props.points}</span>
 			</div>
 		);
 	}

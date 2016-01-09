@@ -28807,7 +28807,7 @@ var LeaderboardEntry = React.createClass({
 			),
 			React.createElement(
 				'span',
-				{ className: 'pull-right' },
+				{ className: 'leaderboard-entry-points pull-right' },
 				this.props.points
 			)
 		);

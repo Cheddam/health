@@ -7,7 +7,7 @@
 @endsection
 
 @section('css')
-	<link rel="stylesheet" href="/css/components/goals.css">
+	<link rel="stylesheet" href="/css/components/leaderboards.css">
 @endsection
 
 @section('js')

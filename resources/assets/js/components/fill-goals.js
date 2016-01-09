@@ -4,6 +4,17 @@ var ReactDOM = require('react-dom');
 var Redux = require('redux');
 require('../helpers/assign');
 
+var Total = React.createClass({
+	render: function() {
+		return (
+			<div className={this.props.points > 0 ? 'total-points' : 'total-points no-points'}>
+				<h2 className="points">{this.props.points}</h2>
+				<p>points today</p>
+			</div>
+		);
+	}
+});
+
 var Goal = React.createClass({
 	handleClick: function() {
 		store.dispatch({
@@ -25,7 +36,7 @@ var Category = React.createClass({
 	render: function() {
 		return (
 			<div className="category">
-				<h4>{this.props.name}</h4>
+				<h3>{this.props.name}</h3>
 				{this.props.goals.map(function(goal) {
 					return (
 						<Goal key={goal.id} id={goal.id} name={goal.name} points={goal.points} completed={goal.completed} />
@@ -54,6 +65,7 @@ var GoalInterface = React.createClass({
 	render: function() {
 		return (
 			<div className="pure-u-1 goal-interface">
+				<Total points={getTotalPoints(this.props.goals)} />
 				<CategoryList categories={this.props.categories} goals={this.props.goals} />
 			</div>
 		);
@@ -154,6 +166,18 @@ var getGoalsForCategory = function(goals, category) {
 	}, category);
 }
 
+var getTotalPoints = function(goals) {
+	var points = 0;
+
+	goals.map(function(goal) {
+		if (goal.completed) {
+			points += parseInt(goal.points);
+		}
+	});
+
+	return points;
+}
+
 // Initialization
 
 var app = Redux.combineReducers({ goalApp });
@@ -201,36 +225,3 @@ var render = function() {
 
 store.subscribe(render);
 render();
-
-// $.ajax({
-// 	url: '/goals/complete/' + id,
-// 	dataType: 'json',
-// 	type: 'POST',
-// 	data: {
-// 		'_token': $('meta[name=csrf-token]').attr('content')
-// 	},
-// 	success: function(data) {
-// 		var localCats = this.state.data;
-
-// 		for (var c = 0; c < localCats.count; c++) {
-// 			for (var g = 0; g < localCats[c].goals.count; g++) {
-// 				if (localCats[c].goals[g].id === data.goal_id) {
-// 					localCats[c].goals[g].completed = true;
-// 				}
-// 			}
-// 		}
-
-// 		this.setState({data: localCats});
-// 	}.bind(this),
-// 	error: function(xhr, status, err) {
-// 		console.error(this.props.url, status, err.toString());
-// 	}.bind(this)
-// });
-
-	// loadGoalsFromServer: function() {
-
-	// },
-	// componentDidMount: function() {
-	// 	this.loadGoalsFromServer();
-	// 	setInterval(this.loadGoalsFromServer, this.props.pollInterval);
-	// },

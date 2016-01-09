@@ -28791,6 +28791,27 @@ var ReactDOM = require('react-dom');
 var Redux = require('redux');
 require('../helpers/assign');
 
+var Total = React.createClass({
+	displayName: 'Total',
+
+	render: function render() {
+		return React.createElement(
+			'div',
+			{ className: this.props.points > 0 ? 'total-points' : 'total-points no-points' },
+			React.createElement(
+				'h2',
+				{ className: 'points' },
+				this.props.points
+			),
+			React.createElement(
+				'p',
+				null,
+				'points today'
+			)
+		);
+	}
+});
+
 var Goal = React.createClass({
 	displayName: 'Goal',
 
@@ -28822,7 +28843,7 @@ var Category = React.createClass({
 			'div',
 			{ className: 'category' },
 			React.createElement(
-				'h4',
+				'h3',
 				null,
 				this.props.name
 			),
@@ -28854,6 +28875,7 @@ var GoalInterface = React.createClass({
 		return React.createElement(
 			'div',
 			{ className: 'pure-u-1 goal-interface' },
+			React.createElement(Total, { points: getTotalPoints(this.props.goals) }),
 			React.createElement(CategoryList, { categories: this.props.categories, goals: this.props.goals })
 		);
 	}
@@ -28943,6 +28965,18 @@ var getGoalsForCategory = function getGoalsForCategory(goals, category) {
 	}, category);
 };
 
+var getTotalPoints = function getTotalPoints(goals) {
+	var points = 0;
+
+	goals.map(function (goal) {
+		if (goal.completed) {
+			points += parseInt(goal.points);
+		}
+	});
+
+	return points;
+};
+
 // Initialization
 
 var app = Redux.combineReducers({ goalApp: goalApp });
@@ -28986,39 +29020,6 @@ var render = function render() {
 
 store.subscribe(render);
 render();
-
-// $.ajax({
-// 	url: '/goals/complete/' + id,
-// 	dataType: 'json',
-// 	type: 'POST',
-// 	data: {
-// 		'_token': $('meta[name=csrf-token]').attr('content')
-// 	},
-// 	success: function(data) {
-// 		var localCats = this.state.data;
-
-// 		for (var c = 0; c < localCats.count; c++) {
-// 			for (var g = 0; g < localCats[c].goals.count; g++) {
-// 				if (localCats[c].goals[g].id === data.goal_id) {
-// 					localCats[c].goals[g].completed = true;
-// 				}
-// 			}
-// 		}
-
-// 		this.setState({data: localCats});
-// 	}.bind(this),
-// 	error: function(xhr, status, err) {
-// 		console.error(this.props.url, status, err.toString());
-// 	}.bind(this)
-// });
-
-// loadGoalsFromServer: function() {
-
-// },
-// componentDidMount: function() {
-// 	this.loadGoalsFromServer();
-// 	setInterval(this.loadGoalsFromServer, this.props.pollInterval);
-// },
 
 },{"../helpers/assign":171,"jquery":1,"react":159,"react-dom":3,"redux":161}],171:[function(require,module,exports){
 // Object.assign Polyfill
