@@ -17,6 +17,7 @@ class CreateGoalsTable extends Migration
             $table->string('category_id');
             $table->string('name');
             $table->integer('points');
+            $table->integer('weight');
             $table->softDeletes();
         });
     }
