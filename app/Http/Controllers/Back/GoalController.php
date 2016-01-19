@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Category;
 use App\Goal;
 
 class GoalController extends Controller
@@ -18,7 +19,14 @@ class GoalController extends Controller
      */
     public function index()
     {
-        return Goal::all();
+        return view('back.pages.goals')
+            ->with('categories', Category::with('goals')->get());
+    }
+
+    public function create()
+    {
+        return view('back.pages.goal')
+            ->with('categories', Category::all());
     }
 
     /**
@@ -33,11 +41,19 @@ class GoalController extends Controller
 
         $goal->name = $request->input('name');
         $goal->points = $request->input('points');
-        $goal->category_id = $request->input('category_id');
+        $goal->category_id = $request->input('category');
+        $goal->weight = $request->input('weight');
 
         $goal->save();
 
-        return $goal;
+        return redirect('/back/goals');
+    }
+
+    public function edit(Request $request, $id)
+    {
+        return view('back.pages.goal')
+            ->with('goal', Goal::find($id))
+            ->with('categories', Category::all());
     }
 
     /**
@@ -53,11 +69,11 @@ class GoalController extends Controller
 
         $goal->name = $request->input('name');
         $goal->points = $request->input('points');
-        $goal->category_id = $request->input('category_id');
+        $goal->category_id = $request->input('category');
 
         $goal->save();
 
-        return $goal;
+        return redirect('/back/goals');
     }
 
     /**
@@ -70,6 +86,6 @@ class GoalController extends Controller
     {
         Goal::destroy($id);
 
-        return response()->json(true);
+        return redirect('/back/goals');
     }
 }

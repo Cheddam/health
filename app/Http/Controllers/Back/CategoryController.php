@@ -21,6 +21,11 @@ class CategoryController extends Controller
         return Category::all();
     }
 
+    public function create()
+    {
+        return view('back.pages.category');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -32,12 +37,17 @@ class CategoryController extends Controller
         $category = new Category();
 
         $category->name = $request->input('name');
-        $category->points = $request->input('points');
-        $category->category_id = $request->input('category_id');
+        $category->weight = $request->input('weight');
 
         $category->save();
 
-        return $category;
+        return redirect('/back/goals');
+    }
+
+    public function edit(Request $request, $id)
+    {
+        return view('back.pages.category')
+            ->with('category', Category::find($id));
     }
 
     /**
@@ -52,12 +62,11 @@ class CategoryController extends Controller
         $category = Category::find($id);
 
         $category->name = $request->input('name');
-        $category->points = $request->input('points');
-        $category->category_id = $request->input('category_id');
+        $category->weight = $request->input('weight');
 
         $category->save();
 
-        return $category;
+        return redirect('/back/goals');
     }
 
     /**
@@ -70,6 +79,6 @@ class CategoryController extends Controller
     {
         Category::destroy($id);
 
-        return response()->json(true);
+        return redirect('/back/goals');
     }
 }

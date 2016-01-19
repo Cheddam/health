@@ -37,14 +37,13 @@ Route::get('/categories/list', function() {
 });
 
 // Backend
-Route::group(['prefix' => 'back', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => 'back', 'middleware' => ['auth', 'admin']], function() {
 	// Views
 	Route::get('/', function() { return view('back.pages.root'); });
-	Route::get('goals', function() { return view('back.pages.goals'); });
 
 	// Endpoints
-	Route::resource('goal', 'Back\GoalController');
-	Route::resource('category', 'Back\CategoryController');
+	Route::resource('goals', 'Back\GoalController');
+	Route::resource('categories', 'Back\CategoryController');
 });
 
 
