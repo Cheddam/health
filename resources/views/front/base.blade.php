@@ -8,8 +8,8 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	
-	<link rel="stylesheet" href="//yui.yahooapis.com/pure/0.6.0/base-min.css">
-	<link rel="stylesheet" href="//yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" href="/css/vendor/pure-base.css">
+	<link rel="stylesheet" href="/css/vendor/pure-main.css">
 	<link rel="stylesheet" href="/css/health.css">
 	@yield('css')
 </head>
