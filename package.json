@@ -2,7 +2,8 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.8.8",
-    "redux-devtools": "^2.1.5"
+    "redux-devtools": "^2.1.5",
+    "uglifyify": "^3.0.1"
   },
   "dependencies": {
     "bootstrap-sass": "^3.0.0",
