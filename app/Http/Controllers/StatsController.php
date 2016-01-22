@@ -23,12 +23,18 @@ class StatsController extends Controller
     {
         $stats = [];
 
-        $stats[] = ['name' => 'Current Week', 'list' => $this->getCurrentWeekLeaderboard()];
+        $stats[] = ['name' => 'Today', 'list' => $this->getTodayLeaderboard()];
+        $stats[] = ['name' => 'This Week', 'list' => $this->getCurrentWeekLeaderboard()];
         $stats[] = ['name' => 'Last 30 Days', 'list' => $this->getLastThirtyDaysLeaderboard()];
         // todo: rethink ur life decisions once there's 10000 rows of data to query
         $stats[] = ['name' => 'All Time', 'list' => $this->getAllTimeLeaderboard()];
 
         return response()->json($stats);
+    }
+
+    private function getTodayLeaderboard()
+    {
+        return $this->getLeaderboardSince(Carbon::today());
     }
 
     private function getCurrentWeekLeaderboard()
@@ -55,7 +61,7 @@ class StatsController extends Controller
     private function getLeaderboardSince(Carbon $date)
     {
         $stats = Entry::select('users.name as name', DB::raw('sum(goals.points) as points'))
-            ->where('completed_on', '>', $date)
+            ->where('completed_on', '>=', $date)
             ->join('users', 'users.id', '=', 'entries.user_id')
             ->join('goals', 'goals.id', '=', 'entries.goal_id')
             ->groupBy('entries.user_id')
