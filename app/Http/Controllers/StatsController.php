@@ -26,8 +26,6 @@ class StatsController extends Controller
         $stats[] = ['name' => 'Today', 'list' => $this->getTodayLeaderboard()];
         $stats[] = ['name' => 'This Week', 'list' => $this->getCurrentWeekLeaderboard()];
         $stats[] = ['name' => 'Last 30 Days', 'list' => $this->getLastThirtyDaysLeaderboard()];
-        // todo: rethink ur life decisions once there's 10000 rows of data to query
-        $stats[] = ['name' => 'All Time', 'list' => $this->getAllTimeLeaderboard()];
 
         return response()->json($stats);
     }
@@ -51,11 +49,6 @@ class StatsController extends Controller
     private function getLastThirtyDaysLeaderboard()
     {
         return $this->getLeaderboardSince(Carbon::now()->subDays(30));
-    }
-
-    private function getAllTimeLeaderboard()
-    {
-        return $this->getLeaderboardSince(Carbon::parse('0-0-0'));
     }
 
     private function getLeaderboardSince(Carbon $date)
