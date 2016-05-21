@@ -68,6 +68,7 @@ class GoalController extends Controller
         $goal = Goal::find($id);
 
         $goal->name = $request->input('name');
+        $goal->classnames = $request->input('classnames');
         $goal->points = $request->input('points');
         $goal->category_id = $request->input('category');
 

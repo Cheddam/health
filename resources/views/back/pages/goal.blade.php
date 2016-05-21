@@ -18,6 +18,11 @@
 			<label for="name">Name</label>
 			<input type="text" name="name" value="{{ isset($goal) ? $goal->name : '' }}">
 		</p>
+
+		<p>
+			<label for="classnames">Class(es)</label>
+			<input type="text" name="classnames" value="{{ isset($goal) ? $goal->classnames : '' }}">
+		</p>
 		
 		<p>
 			<label for="points">Points</label>

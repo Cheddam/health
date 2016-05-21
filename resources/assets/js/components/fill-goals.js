@@ -22,9 +22,17 @@ var Goal = React.createClass({
 			id: this.props.id
 		});
 	},
+	classes: function() {
+		var classes = ['goal'];
+
+		if (this.props.completed) classes.push('goal-completed');
+		if (this.props.classnames) classes.push(this.props.classnames);
+
+		return classes.join(' ');
+	},
 	render: function() {
 		return (
-			<div className={this.props.completed ? 'goal goal-completed' : 'goal'} onClick={this.handleClick}>
+			<div className={this.classes()} onClick={this.handleClick}>
 				<span className="goal-points">{this.props.points}</span>
 				{this.props.name}
 			</div>
@@ -39,7 +47,7 @@ var Category = React.createClass({
 				<h3>{this.props.name}</h3>
 				{this.props.goals.map(function(goal) {
 					return (
-						<Goal key={goal.id} id={goal.id} name={goal.name} points={goal.points} completed={goal.completed} />
+						<Goal key={goal.id} id={goal.id} name={goal.name} points={goal.points} classnames={goal.classnames} completed={goal.completed} />
 					);
 				}, this)}
 			</div>

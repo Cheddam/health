@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Goal extends Model
 {
-    protected $fillable = ['name', 'category_id', 'points'];
+    protected $fillable = ['name', 'category_id', 'points', 'class'];
 
     protected $appends = ['completed'];
 
