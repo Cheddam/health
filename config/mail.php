@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'noreply@sshc.nz', 'name' => 'HealthClub'],
+    'from' => ['address' => 'noreply@mg.sshc.nz', 'name' => 'healthclub'],
 
     /*
     |--------------------------------------------------------------------------
