@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 use App\Role;
+use App\Subscription;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
@@ -51,5 +52,10 @@ class User extends Model implements AuthenticatableContract,
         }
 
         return false;
+    }
+
+    public function subscriptions()
+    {
+        return $this->belongsToMany('App\Notification', 'notification_subscriptions', 'notification_id', 'user_id');
     }
 }
