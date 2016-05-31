@@ -9,6 +9,7 @@
 				<fieldset>
 					{!! csrf_field() !!}
 
+					{{-- TODO: Remove once proper alerts are styled up --}}
 					@if (count($errors) > 0)
 						<ul class="errors">
 							@foreach ($errors->all() as $error)

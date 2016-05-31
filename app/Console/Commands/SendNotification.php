@@ -49,7 +49,7 @@ class SendNotification extends Command
      */
     public function handle()
     {
-        $notification = $this->notification->where('name', $this->argument('notification'))->first();
+        $notification = $this->notification->where('slug', $this->argument('notification'))->first();
 
         if (! $notification) {
             $this->error('Invalid notification provided.');
@@ -61,6 +61,10 @@ class SendNotification extends Command
         if (! count($users)) {
             $this->error('No subscribers to send to!');
             return 1;
+        }
+
+        if ($notification->filter) {
+            $users = $this->{$notification->filter}($users);
         }
 
         if ($this->option('pretend')) {
@@ -81,5 +85,12 @@ class SendNotification extends Command
         }
 
         return 0;
+    }
+
+    public function notCompletedGoals($users)
+    {
+        return $users->reject(function($user) {
+           return $user->allGoalsCompleted;
+        });
     }
 }

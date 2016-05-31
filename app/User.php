@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -57,5 +58,28 @@ class User extends Model implements AuthenticatableContract,
     public function subscriptions()
     {
         return $this->belongsToMany('App\Notification', 'notification_subscriptions', 'notification_id', 'user_id');
+    }
+
+    public function hasSubscription($id)
+    {
+        foreach ($this->subscriptions as $sub) {
+            if ($sub->id === $id) return true;
+        }
+
+        return false;
+    }
+
+    public function entries()
+    {
+        return $this->hasMany('App\Entry', 'user_id');
+    }
+    
+    public function hasCompletedGoalsForToday()
+    {
+        $entries = $this->entries()->where('completed_on', '=', Carbon::today()->toDateString())->get();
+
+        if (Goal::all()->count() > $entries->count()) return false;
+
+        return true;
     }
 }

@@ -7,6 +7,10 @@ Route::get('/', function () {
     return view('front.pages.home');
 });
 
+// Profiles
+Route::controller('profile', 'ProfileController');
+
+
 // Laravel's 'RedirectsUsers' trait has a very poor default
 Route::get('home', function() {
 	return Redirect::to('/');
