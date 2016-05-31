@@ -9,7 +9,7 @@ var Total = React.createClass({
 		return (
 			<div className={this.props.points > 0 ? 'total-points' : 'total-points no-points'}>
 				<h2 className="points">{this.props.points}</h2>
-				<p>points today</p>
+				<p>goal{this.props.points == 1 ? '' : 's'} completed today</p>
 			</div>
 		);
 	}
