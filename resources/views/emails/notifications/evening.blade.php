@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h2>Did you complete your goal today?</h2>
+    <h2>Did you complete your goals today?</h2>
 
     <p>Howdy {{ $user->name }},</p>
 

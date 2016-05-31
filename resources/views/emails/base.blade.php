@@ -12,8 +12,8 @@
                 background-color: green;
                 color: white;
             }
-            p {
-                padding: 20px;
+            h2, p {
+                margin-left: 20px;
             }
         </style>
     </head>

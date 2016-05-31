@@ -16,6 +16,7 @@ class CreateNotificationsTable extends Migration
             $table->increments('id');
             $table->string('name', 100);
             $table->string('slug', 100);
+            $table->string('subject', 150);
             $table->string('template', 150);
             $table->boolean('enabled');
             $table->timestamps();

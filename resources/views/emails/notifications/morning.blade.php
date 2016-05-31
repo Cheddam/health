@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h2>Remember your goal!</h2>
+    <h2>Remember your goals!</h2>
 
     <p>Good morning {{ $user->name }},</p>
 

@@ -74,12 +74,10 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Entry', 'user_id');
     }
     
-    public function hasCompletedGoalsForToday()
+    public function hasCompletedAGoalToday()
     {
         $entries = $this->entries()->where('completed_on', '=', Carbon::today()->toDateString())->get();
 
-        if (Goal::all()->count() > $entries->count()) return false;
-
-        return true;
+        return ($entries->count() > 0);
     }
 }

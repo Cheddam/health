@@ -63,8 +63,8 @@ class SendNotification extends Command
             return 1;
         }
 
-        if ($notification->filter) {
-            $users = $this->{$notification->filter}($users);
+        if (method_exists($this, $notification->slug)) {
+            $users = $this->{$notification->slug}($users);
         }
 
         if ($this->option('pretend')) {
@@ -78,8 +78,9 @@ class SendNotification extends Command
         }
 
         foreach ($users as $user) {
-            Mail::queue('emails.notifications.' . $notification->template, ['user' => $user], function($message) use ($user) {
+            Mail::queue('emails.notifications.' . $notification->template, ['user' => $user], function($message) use ($user, $notification) {
                 $message->to($user->email, $user->name);
+                $message->subject($notification->subject);
             });
             $this->info('Queued notification for ' . $user->name . ' <' . $user->email . '>');
         }
@@ -87,10 +88,10 @@ class SendNotification extends Command
         return 0;
     }
 
-    public function notCompletedGoals($users)
+    public function evening($users)
     {
         return $users->reject(function($user) {
-           return $user->allGoalsCompleted;
+           return $user->hasCompletedAGoalToday();
         });
     }
 }
