@@ -45,6 +45,20 @@
 		color: red;
 	}
 
-.sleep {
-	color: red;
+/* Junk-Free June Goal */
+.junkfreejune {
+	padding: 0;
+	background: #b188e9;
+	color: white;
+	border: none;
+	border-radius: 5px;
 }
+	.junkfreejune .goal-points {
+		background: none;
+	}
+.junkfreejune.goal-completed {
+	background: #6f43d6;
+}
+	.junkfreejune.goal-completed .goal-points {
+		background: none;
+	}

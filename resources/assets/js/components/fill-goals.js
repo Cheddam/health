@@ -33,7 +33,7 @@ var Goal = React.createClass({
 	render: function() {
 		return (
 			<div className={this.classes()} onClick={this.handleClick}>
-				<span className="goal-points">{this.props.points}</span>
+				<span className="goal-points">{this.props.completed ? '✓' : '✗'}</span>
 				{this.props.name}
 			</div>
 		);

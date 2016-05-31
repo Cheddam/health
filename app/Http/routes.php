@@ -27,7 +27,7 @@ Route::group(['prefix' => 'stats'], function() {
 });
 
 Route::get('/categories/list', function() {
-	return Category::all();
+	return Category::orderBy('weight', 'asc')->get();
 });
 
 // Backend

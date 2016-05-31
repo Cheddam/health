@@ -21,7 +21,7 @@ class GoalController extends Controller
 
     public function getGoals(Request $request)
     {
-    	return Goal::all();
+        return Goal::orderBy('weight', 'asc')->get();
     }
 
     /**
