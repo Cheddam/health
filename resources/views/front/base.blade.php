@@ -16,6 +16,8 @@
 <body>
 	@include('front.partials.nav')
 
+	@include('front.partials.messages')
+
 	<div id="content">
 		@yield('content')
 	</div>

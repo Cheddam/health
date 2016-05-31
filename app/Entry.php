@@ -19,4 +19,9 @@ class Entry extends Model
     {
     	return $this->belongsTo('App\Goal');
     }
+
+    public function allEntriesForDate($date = null)
+    {
+        if (!$date) {}
+    }
 }
